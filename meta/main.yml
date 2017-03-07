@@ -1,0 +1,17 @@
+galaxy_info:
+  author: alpegon3@upv.es
+  description: Install Apache Zookeeper
+  company: GRyCAP UPV
+  license: Apache
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+  galaxy_tags:
+   - zookeeper
+
+dependencies:
+  - { role: 'grycap.zookeeper' }
+  - { role: 'grycap.kafka', kafka_system_shell: '{{ monasca_system_shell }}',
+                            kafka_system_user_home: '{{ monasca_system_user_home }}' }

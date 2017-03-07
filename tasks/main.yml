@@ -1,0 +1,42 @@
+---
+- name: Check if Zookeeper is running
+  command: systemctl status zookeeper
+  ignore_errors: yes
+  changed_when: false
+  register: service_zookeeper_status
+
+- name: Install Zookeeper when service is not found
+  apt: name=zookeeperd state=latest update_cache=yes
+  when: service_zookeeper_status | failed
+
+- name: Drop Zookeeper Config(s)
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "0644"
+  with_items:
+    - src: "zoo.cfg.j2"
+      dest: "/etc/zookeeper/conf/zoo.cfg"
+      owner: "root"
+      group: "root"
+    - src: "myid.j2"
+      dest: "/etc/zookeeper/conf/myid"
+      owner: "root"
+      group: "root"
+    - src: "environment.j2"
+      dest: "/etc/zookeeper/conf/environment"
+      owner: "root"
+      group: "root"
+    - src: "log4j.properties.j2"
+      dest: "/etc/zookeeper/conf/log4j.properties"
+      owner: "root"
+      group: "root"
+  register: zookeeper_config
+
+- name: Restart zookeeper
+  service:
+    name: "zookeeper"
+    state: "restarted"
+  when: zookeeper_config.changed
