@@ -1,4 +1,12 @@
 ---
+- name: Ensure Java is installed
+  apt: name=openjdk-8-jre-headless state=present
+
+- name: Select java version 8 (Problems with java 9)
+  alternatives:
+    name: java
+    path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
 - name: Check if Zookeeper is running
   command: systemctl status zookeeper
   ignore_errors: yes
