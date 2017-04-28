@@ -1,34 +1,6 @@
 ---
-- name: Add java repository to ub14
-  apt_repository:
-    repo: 'ppa:openjdk-r/ppa'
-    update_cache: yes
-    validate_certs: yes
-  when: ansible_os_family == "Debian" and ansible_distribution_major_version == "14"
-
-- name: Ensure Java is installed (Debian)
-  apt: name=openjdk-8-jre-headless state=present update_cache=yes
-  when: ansible_os_family == "Debian"
-
-- name: Ensure Java is installed (RedHat)
-  yum: name=java-1.8.0-openjdk-headless state=present update_cache=yes
-  when: ansible_os_family == "RedHat"
-
-- name: Select java version 8 (Problems with java 9)
-  alternatives:
-    name: java
-    path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-  when: ansible_os_family == "Debian"
-
-- name: Check if Zookeeper is running
-  command: systemctl status zookeeper
-  ignore_errors: yes
-  changed_when: false
-  register: service_zookeeper_status
-
-- name: Install Zookeeper when service is not found
-  apt: name=zookeeperd state=latest update_cache=yes
-  when: service_zookeeper_status | failed
+- name: Include "{{ansible_os_family}}" zookeeper recipe
+  include: "{{ansible_os_family}}.yml"
 
 - name: Drop Zookeeper Config(s)
   template:

@@ -1,0 +1,30 @@
+---
+- name: Add tools needed in ubuntu 14
+  apt:
+    name: 'software-properties-common'
+    update_cache: yes
+  when: ansible_distribution_major_version == "14"
+
+- name: Add java repository to ub14
+  apt_repository:
+    repo: 'ppa:openjdk-r/ppa'
+    update_cache: yes
+    validate_certs: yes
+  when: ansible_distribution_major_version == "14"
+
+- name: Ensure Java is installed (Debian)
+  apt:
+    name: openjdk-8-jre-headless
+    state: present
+    update_cache: yes
+
+- name: Select java version 8 (Problems with java 9)
+  alternatives:
+    name: java
+    path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
+- name: Install Zookeeper package
+  apt:
+    name: zookeeperd
+    state: latest
+    update_cache: yes
