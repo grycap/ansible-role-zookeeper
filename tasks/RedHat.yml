@@ -13,6 +13,16 @@
 
 - name: Install Zookeeper package
   yum:
-    name: zookeeper
+    name: zookeeper-server
     state: latest
     update_cache: yes
+  register: zookeeper_install
+
+- name: Initialice zookeeper configuration
+  command: service zookeeper-server init
+  when: zookeeper_install.changed
+
+- name: Start zookeeper service
+  service:
+    name: "zookeeper-server"
+    state: "started"

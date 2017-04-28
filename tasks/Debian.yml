@@ -16,7 +16,6 @@
   apt:
     name: openjdk-8-jre-headless
     state: present
-    update_cache: yes
 
 - name: Select java version 8 (Problems with java 9)
   alternatives:

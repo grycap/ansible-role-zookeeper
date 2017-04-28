@@ -32,4 +32,10 @@
   service:
     name: "zookeeper"
     state: "restarted"
-  when: zookeeper_config.changed
+  when: zookeeper_config.changed and ansible_os_family == "Debian"
+
+- name: Restart zookeeper
+  service:
+    name: "zookeeper-server"
+    state: "restarted"
+  when: zookeeper_config.changed and ansible_os_family == "RedHat"
