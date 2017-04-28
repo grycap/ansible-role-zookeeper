@@ -12,7 +12,7 @@
     validate_certs: yes
   when: ansible_distribution_major_version == "14"
 
-- name: Ensure Java is installed (Debian)
+- name: Ensure Java is installed
   apt:
     name: openjdk-8-jre-headless
     state: present
