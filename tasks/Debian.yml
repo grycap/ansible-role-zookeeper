@@ -1,10 +1,4 @@
 ---
-- name: Add tools needed in ubuntu 14
-  apt:
-    name: 'software-properties-common'
-    update_cache: yes
-  when: ansible_distribution_major_version == "14"
-
 - name: Add java repository to ub14
   apt_repository:
     repo: 'ppa:openjdk-r/ppa'
@@ -12,10 +6,17 @@
     validate_certs: yes
   when: ansible_distribution_major_version == "14"
 
+- name: Workaround for 'ca-certificates-java' bug in Ubuntu 14 
+  file:
+    path: /usr/share/man/man1
+    state: directory
+  when: ansible_distribution_major_version == "14"
+
 - name: Ensure Java is installed
   apt:
     name: openjdk-8-jre-headless
     state: present
+    update_cache: yes
 
 - name: Select java version 8 (Problems with java 9)
   alternatives:
