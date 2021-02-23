@@ -1,0 +1,13 @@
+---
+- name: Prepare
+  hosts: all
+  become: false
+  gather_facts: false
+
+  pre_tasks:
+    - name: fix java issue in Ubuntu
+      file:
+        path: /usr/share/man/man1
+        state: directory
+        recurse: yes
+      ignore_errors: yes
