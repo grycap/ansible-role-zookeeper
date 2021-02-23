@@ -5,24 +5,12 @@
     state: present
     update_cache: yes
 
-- name: Install Zookeeper Repository
-  yum:
-    name: "https://archive.cloudera.com/cdh5/one-click-install/redhat/{{ansible_distribution_major_version}}/x86_64/cloudera-cdh-5-0.x86_64.rpm"
-    state: present
-    update_cache: yes
+- name: Copy ZK package
+  copy: src=zookeeper-3.4.9-1.x86_64.rpm dest=/tmp/zookeeper-3.4.9-1.x86_64.rpm
 
 - name: Install Zookeeper package
   yum:
-    name: zookeeper-server
+    name: /tmp/zookeeper-3.4.9-1.x86_64.rpm
     state: latest
     update_cache: yes
-  register: zookeeper_install
-
-- name: Initialice zookeeper configuration
-  command: service zookeeper-server init
-  when: zookeeper_install.changed
-
-- name: Start zookeeper service
-  service:
-    name: "zookeeper-server"
-    state: "started"
+    disable_gpg_check: yes

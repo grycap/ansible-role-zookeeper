@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  tasks:
+
+    - name: "Include grycap.zookeeper"
+      include_role:
+        name: "ansible-role-zookeeper"
+      vars:
+        server_list: ["127.0.0.1"]

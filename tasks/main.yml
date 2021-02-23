@@ -2,6 +2,9 @@
 - name: Include "{{ansible_os_family}}" zookeeper recipe
   include: "{{ansible_os_family}}.yml"
 
+- name: Create /etc/zookeeper/conf/ dir
+  file: path=/etc/zookeeper/conf/ state=directory
+
 - name: Drop Zookeeper Config(s)
   template:
     src: "{{ item.src }}"
@@ -32,10 +35,9 @@
   service:
     name: "zookeeper"
     state: "restarted"
-  when: zookeeper_config.changed and ansible_os_family == "Debian"
+  when: zookeeper_config.changed
 
-- name: Restart zookeeper
+- name: Start zookeeper service
   service:
-    name: "zookeeper-server"
-    state: "restarted"
-  when: zookeeper_config.changed and ansible_os_family == "RedHat"
+    name: "zookeeper"
+    state: "started"
