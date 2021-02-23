@@ -18,6 +18,7 @@ jobs:
       matrix:
         distro:
           - "centos7"
+          - "centos8"
           - "ubuntu1804"
           - "ubuntu2004"
 
