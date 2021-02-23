@@ -13,9 +13,3 @@
     name: /tmp/zookeeper-3.4.9-1.x86_64.rpm
     state: latest
     update_cache: yes
-  register: zookeeper_install
-
-- name: Start zookeeper service
-  service:
-    name: "zookeeper"
-    state: "started"
