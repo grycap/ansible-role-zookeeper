@@ -2,6 +2,9 @@
 - name: Include "{{ansible_os_family}}" zookeeper recipe
   include: "{{ansible_os_family}}.yml"
 
+- name: Create /etc/zookeeper/conf/ dir
+  file: path=/etc/zookeeper/conf/ state=directory
+
 - name: Drop Zookeeper Config(s)
   template:
     src: "{{ item.src }}"
