@@ -4,6 +4,9 @@
   become: true
   tasks:
 
+    - name: fix java issue in Ubuntu
+      command: mkdir -p /usr/share/man/man1
+
     - name: "Include grycap.zookeeper"
       include_role:
         name: "ansible-role-zookeeper"
