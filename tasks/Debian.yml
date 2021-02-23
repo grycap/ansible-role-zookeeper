@@ -10,7 +10,6 @@
   file:
     path: /usr/share/man/man1
     state: directory
-  when: ansible_distribution_major_version == "14"
 
 - name: Ensure Java is installed
   apt:
