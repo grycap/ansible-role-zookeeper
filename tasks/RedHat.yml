@@ -13,3 +13,4 @@
     name: /tmp/zookeeper-3.4.9-1.x86_64.rpm
     state: latest
     update_cache: yes
+    disable_gpg_check: yes
