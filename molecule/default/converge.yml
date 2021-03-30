@@ -10,5 +10,17 @@
       vars:
         server_list: ["127.0.0.1"]
 
+    - name: Ensure netcat is installed
+      apt:
+        name: netcat
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure netcat is installed
+      yum:
+        name: nc
+        state: present
+      when: ansible_os_family == "RedHat"
+
     - shell: echo stat | nc localhost 2181
       changed_when: false
