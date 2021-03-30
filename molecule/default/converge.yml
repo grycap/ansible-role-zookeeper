@@ -9,3 +9,6 @@
         name: "ansible-role-zookeeper"
       vars:
         server_list: ["127.0.0.1"]
+
+    - shell: echo stat | nc localhost 2181
+      changed_when: false
