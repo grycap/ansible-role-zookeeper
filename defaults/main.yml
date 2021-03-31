@@ -1,1 +1,4 @@
 server_list: ["{{ansible_default_ipv4.address}}"]
+zookeeper_id: 0
+zookeeper_version: 'latest'
+zookeeper_image: "indigodatacloud/zookeeper:{{zookeeper_version}}"
